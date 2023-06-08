@@ -16,7 +16,7 @@ import 'providers/providers.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    // name: "chatt-feature",
+    // name: "chatt-features",
     options: DefaultFirebaseOptions.currentPlatform,
   );
   SharedPreferences prefs = await SharedPreferences.getInstance();

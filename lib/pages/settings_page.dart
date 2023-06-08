@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last, prefer_const_constructors
+
 import 'dart:async';
 import 'dart:io';
 
@@ -55,7 +57,9 @@ class SettingsPageState extends State<SettingsPage> {
 
   Future getImage() async {
     ImagePicker imagePicker = ImagePicker();
-    XFile? pickedFile = await imagePicker.pickImage(source: ImageSource.gallery).catchError((err) {
+    XFile? pickedFile = await imagePicker
+        .pickImage(source: ImageSource.gallery)
+        .catchError((err) {
       Fluttertoast.showToast(msg: err.toString());
       return null;
     });
@@ -74,7 +78,8 @@ class SettingsPageState extends State<SettingsPage> {
 
   Future uploadFile() async {
     String fileName = id;
-    UploadTask uploadTask = settingProvider.uploadFile(avatarImageFile!, fileName);
+    UploadTask uploadTask =
+        settingProvider.uploadFile(avatarImageFile!, fileName);
     try {
       TaskSnapshot snapshot = await uploadTask;
       photoUrl = await snapshot.ref.getDownloadURL();
@@ -85,7 +90,8 @@ class SettingsPageState extends State<SettingsPage> {
         aboutMe: aboutMe,
       );
       settingProvider
-          .updateDataFirestore(FirestoreConstants.pathUserCollection, id, updateInfo.toJson())
+          .updateDataFirestore(
+              FirestoreConstants.pathUserCollection, id, updateInfo.toJson())
           .then((data) async {
         await settingProvider.setPref(FirestoreConstants.photoUrl, photoUrl);
         setState(() {
@@ -120,7 +126,8 @@ class SettingsPageState extends State<SettingsPage> {
       aboutMe: aboutMe,
     );
     settingProvider
-        .updateDataFirestore(FirestoreConstants.pathUserCollection, id, updateInfo.toJson())
+        .updateDataFirestore(
+            FirestoreConstants.pathUserCollection, id, updateInfo.toJson())
         .then((data) async {
       await settingProvider.setPref(FirestoreConstants.nickname, nickname);
       await settingProvider.setPref(FirestoreConstants.aboutMe, aboutMe);
@@ -177,8 +184,9 @@ class SettingsPageState extends State<SettingsPage> {
                                       color: ColorConstants.greyColor,
                                     );
                                   },
-                                  loadingBuilder:
-                                      (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
                                     if (loadingProgress == null) return child;
                                     return Container(
                                       width: 90,
@@ -186,9 +194,13 @@ class SettingsPageState extends State<SettingsPage> {
                                       child: Center(
                                         child: CircularProgressIndicator(
                                           color: ColorConstants.themeColor,
-                                          value: loadingProgress.expectedTotalBytes != null
-                                              ? loadingProgress.cumulativeBytesLoaded /
-                                                  loadingProgress.expectedTotalBytes!
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
                                               : null,
                                         ),
                                       ),
@@ -229,12 +241,14 @@ class SettingsPageState extends State<SettingsPage> {
                     ),
                     Container(
                       child: Theme(
-                        data: Theme.of(context).copyWith(primaryColor: ColorConstants.primaryColor),
+                        data: Theme.of(context).copyWith(
+                            primaryColor: ColorConstants.primaryColor),
                         child: TextField(
                           decoration: InputDecoration(
                             hintText: 'Sweetie',
                             contentPadding: EdgeInsets.all(5),
-                            hintStyle: TextStyle(color: ColorConstants.greyColor),
+                            hintStyle:
+                                TextStyle(color: ColorConstants.greyColor),
                           ),
                           controller: controllerNickname,
                           onChanged: (value) {
@@ -259,12 +273,14 @@ class SettingsPageState extends State<SettingsPage> {
                     ),
                     Container(
                       child: Theme(
-                        data: Theme.of(context).copyWith(primaryColor: ColorConstants.primaryColor),
+                        data: Theme.of(context).copyWith(
+                            primaryColor: ColorConstants.primaryColor),
                         child: TextField(
                           decoration: InputDecoration(
                             hintText: 'Fun, like travel and play PES...',
                             contentPadding: EdgeInsets.all(5),
-                            hintStyle: TextStyle(color: ColorConstants.greyColor),
+                            hintStyle:
+                                TextStyle(color: ColorConstants.greyColor),
                           ),
                           controller: controllerAboutMe,
                           onChanged: (value) {
@@ -288,7 +304,8 @@ class SettingsPageState extends State<SettingsPage> {
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(ColorConstants.primaryColor),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          ColorConstants.primaryColor),
                       padding: MaterialStateProperty.all<EdgeInsets>(
                         EdgeInsets.fromLTRB(30, 10, 30, 10),
                       ),
