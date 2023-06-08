@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_declarations
+// ignore_for_file: prefer_const_declarations, prefer_const_constructors
 
 import 'dart:io';
 
@@ -88,61 +88,88 @@ class _GroupChatPageState extends State<GroupChatPage> {
 
                     return Padding(
                       padding: const EdgeInsets.only(top: 20.0),
-                      child: ListTile(
-                        title: Column(
-                          crossAxisAlignment: isSender
-                              ? CrossAxisAlignment.end
-                              : CrossAxisAlignment.start,
-                          children: [
-                            Text(senderName),
-                          ],
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: isSender
-                              ? CrossAxisAlignment.end
-                              : CrossAxisAlignment.start,
-                          children: [
-                            if (imageUrl.isNotEmpty)
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: isSender
-                                      ? const Color(0xFFe1f0ff)
-                                      : const Color(0xFFc9f7f5),
-                                  borderRadius: BorderRadius.circular(
-                                    22,
+                      child: Column(
+                        crossAxisAlignment: isSender
+                            ? CrossAxisAlignment.end
+                            : CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  title: Column(
+                                    crossAxisAlignment: isSender
+                                        ? CrossAxisAlignment.end
+                                        : CrossAxisAlignment.start,
+                                    children: [
+                                      Text(senderName),
+                                    ],
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment: isSender
+                                        ? CrossAxisAlignment.end
+                                        : CrossAxisAlignment.start,
+                                    children: [
+                                      if (imageUrl.isNotEmpty)
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: isSender
+                                                ? const Color(0xFFe1f0ff)
+                                                : const Color(0xFFc9f7f5),
+                                            borderRadius: BorderRadius.circular(
+                                              22,
+                                            ),
+                                          ),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.5,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              child: Image.network(
+                                                imageUrl,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      else
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: isSender
+                                                ? const Color(0xFFe1f0ff)
+                                                : const Color(0xFFc9f7f5),
+                                            borderRadius: BorderRadius.circular(
+                                              22,
+                                            ),
+                                          ),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.5,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: Text(
+                                              content,
+                                            ),
+                                          ),
+                                        ),
+                                    ],
                                   ),
                                 ),
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    child: Image.network(
-                                      imageUrl,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            else
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: isSender
-                                      ? const Color(0xFFe1f0ff)
-                                      : const Color(0xFFc9f7f5),
-                                  borderRadius: BorderRadius.circular(
-                                    22,
-                                  ),
-                                ),
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Text(
-                                    content,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 22.0),
+                            child: const Icon(
+                              Icons.reply_outlined,
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   },
