@@ -7,10 +7,19 @@ class ChatProvider {
   final FirebaseFirestore firestore;
   final FirebaseStorage storage;
 
-  ChatProvider({required this.firestore, required this.storage});
+  ChatProvider({
+    required this.firestore,
+    required this.storage,
+  });
 
   Future<void> sendMessage(
-      String groupId, String message, String senderName) async {
+    String groupId,
+    String message,
+    String senderName, {
+    String replyToMessageId = '',
+    String replyToSenderName = '',
+    String replyToContent = '',
+  }) async {
     await firestore
         .collection('group_chats')
         .doc(groupId)
@@ -19,10 +28,20 @@ class ChatProvider {
       'message': message,
       'senderName': senderName,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'replyToMessageId': replyToMessageId,
+      'replyToSenderName': replyToSenderName,
+      'replyToContent': replyToContent,
     });
   }
 
-  Future<void> sendImage(String groupId, String senderName, File image) async {
+  Future<void> sendImage(
+    String groupId,
+    String senderName,
+    File image, {
+    String replyToMessageId = '',
+    String replyToSenderName = '',
+    String replyToContent = '',
+  }) async {
     final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
     final Reference storageReference =
         storage.ref().child('group_chats/$groupId/images/$fileName');
@@ -39,6 +58,9 @@ class ChatProvider {
       'imageUrl': imageUrl,
       'senderName': senderName,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'replyToMessageId': replyToMessageId,
+      'replyToSenderName': replyToSenderName,
+      'replyToContent': replyToContent,
     });
   }
 }
